@@ -40,6 +40,22 @@ if frontend_dir.exists():
             return FileResponse(str(index_file))
         return {"message": "Frontend index.html not found"}
 
+    @app.get("/style.css", include_in_schema=False)
+    async def serve_css():
+        """Serve frontend stylesheet."""
+        css_file = frontend_dir / "style.css"
+        if css_file.exists():
+            return FileResponse(str(css_file), media_type="text/css")
+        return {"message": "style.css not found"}
+
+    @app.get("/script.js", include_in_schema=False)
+    async def serve_js():
+        """Serve frontend client script."""
+        js_file = frontend_dir / "script.js"
+        if js_file.exists():
+            return FileResponse(str(js_file), media_type="application/javascript")
+        return {"message": "script.js not found"}
+
 
 if __name__ == "__main__":
     import uvicorn

@@ -11,6 +11,20 @@ def test_serve_index_html():
     assert "Linux Hardware AI Assistant" in response.text
 
 
+def test_serve_css():
+    response = client.get("/style.css")
+    assert response.status_code == 200
+    assert "text/css" in response.headers.get("content-type", "")
+    assert "--bg-primary" in response.text
+
+
+def test_serve_js():
+    response = client.get("/script.js")
+    assert response.status_code == 200
+    assert "application/javascript" in response.headers.get("content-type", "")
+    assert "API_BASE" in response.text
+
+
 def test_get_health():
     response = client.get("/api/health")
     assert response.status_code == 200
